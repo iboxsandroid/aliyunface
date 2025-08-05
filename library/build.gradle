@@ -1,0 +1,64 @@
+// library/build.gradle
+apply plugin: 'com.android.library'
+apply plugin: 'maven-publish'
+
+android {
+    compileSdkVersion 33
+    
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 33
+        versionCode 1
+        versionName "1.0.1"
+    }
+    
+    // 避免配置时间属性访问问题
+    testOptions {
+        unitTests.all {
+            // 禁用测试以加快构建
+            enabled = false
+        }
+    }
+}
+
+// 配置Maven发布
+publishing {
+    publications {
+        aar(MavenPublication) {
+            groupId = 'com.github.iboxsandroid'
+            artifactId = 'aliyunFace'
+            version = '1.0.2'
+            
+            // 指定AAR文件路径
+            artifact("$projectDir/src/main/aar/aliyun-face-2.3.35.250512103048.aar")
+            
+            // 添加POM元数据
+            pom {
+                name = 'ijkplayer'
+                description = 'ijkplayer'
+                url = 'https://github.com/iboxsandroid/aliyunFace'
+                
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                
+                developers {
+                    developer {
+                        id = 'iboxsandroid'
+                        name = 'iboxsandroid'
+                        email = 'your@example.com'
+                    }
+                }
+                
+                scm {
+                    connection = 'scm:git:git://github.com/iboxsandroid/aliyunFace.git'
+                    developerConnection = 'scm:git:ssh://github.com/iboxsandroid/aliyunFace.git'
+                    url = 'https://github.com/iboxsandroid/aliyunFace'
+                }
+            }
+        }
+    }
+}
